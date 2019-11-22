@@ -9,15 +9,19 @@ public class StringPrinter {
     this.printStream = printStream;
   }
 
-  public void println(String format, Object ... params) {
+  public StringPrinter println(String format, Object ... params) {
     String formatted = Strings.create(format, params);
 
     printStream.println(formatted);
+
+    return this;
   }
 
-  public void print(String format, Object ... params) {
+  public StringPrinter print(String format, Object ... params) {
     String formatted = Strings.create(format, params);
 
     printStream.print(formatted);
+
+    return this;
   }
 }
