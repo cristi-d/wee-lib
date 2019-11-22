@@ -63,7 +63,7 @@ assertTrue(Strings.isEmpty(null));
 assertTrue(Strings.isEmpty(""));
 assertFalse(Strings.isEmpty(" ");
 
-assertFalse(Strings.isEmpty(null));
+assertFalse(Strings.isNotEmpty(null));
 assertFalse(Strings.isNotEmpty(""))
 assertTrue(Strings.isNotEmpty(" "))
 ```
