@@ -7,6 +7,13 @@
     <groupId>net.techtrix.wee.lib</groupId>
     <artifactId>wee-lib</artifactId>
     <version>1.0.0-SNAPSHOT</version>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -23,12 +30,17 @@
         </dependency>
     </dependencies>
 
-    <properties>
-        <java.version>1.8</java.version>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-    </properties>
-
-
-
+    <developers>
+        <developer>
+            <name>cristi-d</name>
+            <organization>techtrix</organization>
+            <url>https://github.com/cristi-d</url>
+        </developer>
+    </developers>
+    <scm>
+        <connection>scm:git:git://github.com/cristi-d/wee-lib.git</connection>
+        <developerConnection>scm:git:git@github.com/cristi-d/wee-lib.git</developerConnection>
+        <url>https://github.com/cristi-d/wee-lib.git</url>
+        <tag>HEAD</tag>
+    </scm>
 </project>
