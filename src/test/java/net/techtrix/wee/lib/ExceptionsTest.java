@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ExceptionsTest {
 
   @Test
-  public void testBuilderFacade() {
+  void testBuilderFacade() {
     IllegalStateException result =
         Exceptions
             .builder(IllegalStateException.class)
@@ -18,5 +18,12 @@ class ExceptionsTest {
 
     String expectedMsg = "Some horrific message";
     assertEquals(expectedMsg, result.getMessage());
+  }
+
+  @Test
+  void testTryFacade() {
+    String result = Exceptions.attempt(() -> "perfection!").go();
+
+    assertEquals("perfection!", result);
   }
 }

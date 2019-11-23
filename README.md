@@ -14,10 +14,9 @@ if (sysyphus.isntTired()) {
 ```
 
 ## Exceptions
-Facade for building exceptions with templated messages
+Facade for building exceptions with templated messages or for writing try-catch builder style
 ```
 //Create an Exception object
-
 IllegalStateException forSafeKeeping = 
   Exceptions
     .builder(IllegalStateException.class)
@@ -33,6 +32,26 @@ Exceptions
   .withMessage("Encountered a{}nasty exception", panicDegree)
   .buildAndThrow();
 
+
+//Or use .attempt(...) instead of try-catch
+String result = 
+  Exceptions
+    .attempt(() -> {
+        if (Math.random() < 0.5) {
+          throw new IllegalStateException("Bad luck...");
+        }
+
+        return "brilliant!"; 
+      })
+     .fallback(IllegalStateException.class, () -> "second best ...")
+     .abort(IllegalArgumentException.class, (ex) -> log.error("Can't fallback")
+     .go();
+
+assertEquals("second best ...", result);
+
+//You can also the Try class directly
+String result = Try.of(() -> "some value").go();
+assertEquals("some value", result);
 ```
 
 ## Strings
