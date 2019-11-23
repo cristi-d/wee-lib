@@ -25,7 +25,7 @@ IllegalStateException forSafeKeeping =
 
 //Or create and throw it
 Exception cause = new UnsupportedOperationException("Oops...");
-String panicDegree = Math.random() > 0.5 ? " very " : "";
+String panicDegree = Math.random() > 0.5 ? " very " : " ";
 Exceptions
   .builder(IllegalStateException.class)
   .withCause(cause)
@@ -82,7 +82,7 @@ assertTrue(Strings.isEmpty(null));
 assertTrue(Strings.isEmpty(""));
 assertFalse(Strings.isEmpty(" ");
 
-assertFalse(Strings.isEmpty(null));
+assertFalse(Strings.isNotEmpty(null));
 assertFalse(Strings.isNotEmpty(""))
 assertTrue(Strings.isNotEmpty(" "))
 ```
