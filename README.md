@@ -69,7 +69,7 @@ Facade for building exceptions with templated messages
 IllegalStateException forSafeKeeping = 
   Exceptions
     .builder(IllegalStateException.class)
-    .withMessage("All of the sudden, without any apparent cause we decided to create an exception. Epoch was {} millis ago", System.currentTimeMillis())
+    .withMessage("Here's an exception that's {} millis old", System.currentTimeMillis())
     .build();
 
 //Or create and throw it
