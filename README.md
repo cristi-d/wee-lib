@@ -13,8 +13,57 @@ if (sysyphus.isntTired()) {
 }
 ```
 
+## Recoverable
+Useful for operations for which we can provide fallbacks in case of failures
+
+```
+AtomicBoolean executionFlag = new AtomicBoolean(false);
+
+Recoverable<String> serviceHostnameFetcher =  
+    Recoverable
+      .of(() -> pingAndReturnFirstAvailableNode())
+      .recoverIf(SocketException.class, () -> getLocalHostname())
+      .finallyDo(() -> executionFlag.set(true))
+      .go();
+
+assertTrue(serviceHostnameFetcher.isExecuted());
+assertTrue(executionFlag.get());
+assertTrue(serviceHostnameFetcher.getExecutionTimestamp().isPresent());
+assertTrue(serviceHostnameFetcher.isSuccessful());
+assertTrue(serviceHostnameFetcher.getRecoveryCause().isPresent());
+assertFalse(serviceHostnameFetcher.getFailureCause().isPresent());
+assertEquals(SocketException.class, serviceHostnameFetcher.getRecoveryCause().get().getClass());
+assertEquals(getLocalHostname(), serviceHostnameFetcher.getResult());
+
+```
+
+## RepeatingAttempt
+Useful for polling or retrying
+```
+
+RepeatingAttempt<Integer> progressCheck =
+    RepeatingAttempt
+      .of(() -> {
+        int progress = pollProgress();
+    
+        return progress; 
+      })
+      .until((progress) -> progress == 100) //when to stop attempting
+      .fixedDelay(300) //300 millis between attempts
+      .abortingAfter(10) //aborting after 10 attempts
+      .go();
+
+assertTrue(progressCheck.isStarted());
+assertTrue(progressCheck.isFinished());
+
+//In case we did reached the result we were attempting to get
+assertTrue(progressCheck.isSuccessful()); 
+assertTrue(progressCheck.getResult().isPresent());
+assertEquals(100, progressCheck.getResult().get());
+```
+
 ## Exceptions
-Facade for building exceptions with templated messages or for writing try-catch builder style
+Facade for building exceptions with templated messages
 ```
 //Create an Exception object
 IllegalStateException forSafeKeeping = 
@@ -31,27 +80,6 @@ Exceptions
   .withCause(cause)
   .withMessage("Encountered a{}nasty exception", panicDegree)
   .buildAndThrow();
-
-
-//Or use .attempt(...) instead of try-catch
-String result = 
-  Exceptions
-    .attempt(() -> {
-        if (Math.random() < 0.5) {
-          throw new IllegalStateException("Bad luck...");
-        }
-
-        return "brilliant!"; 
-      })
-     .fallback(IllegalStateException.class, () -> "second best ...")
-     .abort(IllegalArgumentException.class, (ex) -> log.error("Can't fallback")
-     .go();
-
-assertEquals("second best ...", result);
-
-//You can also the Try class directly
-String result = Try.of(() -> "some value").go();
-assertEquals("some value", result);
 ```
 
 ## Strings

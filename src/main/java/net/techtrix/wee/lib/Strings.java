@@ -1,7 +1,6 @@
 package net.techtrix.wee.lib;
 
 import java.io.PrintStream;
-import java.io.StringReader;
 
 public class Strings {
   private static final Printers printers = new Printers();

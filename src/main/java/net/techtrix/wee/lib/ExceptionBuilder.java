@@ -12,6 +12,58 @@ class ExceptionBuilder<T extends Exception> {
   private ExceptionBuilder() {
   }
 
+  static <T extends Exception> ExceptionBuilder<T> of(Class<T> exceptionClass) {
+    ExceptionBuilder<T> builder = new ExceptionBuilder<>();
+    builder.exceptionClass = exceptionClass;
+
+    return builder;
+  }
+
+  public ExceptionBuilder<T> withCause(Throwable cause) {
+    this.cause = cause;
+
+    return this;
+  }
+
+  public ExceptionBuilder<T> withMessage(String message, Object parameters) {
+    String formattedMessage = Strings.create(message, parameters);
+    this.message = formattedMessage;
+
+    return this;
+  }
+
+  public T build() {
+    final String exceptionClassName = exceptionClass.getSimpleName();
+    final Class<?>[] constructorParamTypes;
+    final Object[] constructorParams;
+    final Constructor<T> constructor;
+
+    if (message == null && cause == null) {
+      constructorParamTypes = new Class[0];
+      constructorParams = new Object[0];
+    } else {
+      if (cause == null) {
+        constructorParamTypes = new Class[]{String.class};
+        constructorParams = new Object[]{message};
+      } else {
+        constructorParamTypes = new Class[]{String.class, Throwable.class};
+        constructorParams = new Object[]{message, cause};
+      }
+    }
+
+    try {
+      return exceptionClass.getConstructor(constructorParamTypes).newInstance(constructorParams);
+    } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+      throw new CreationException(e, exceptionClass, message, cause);
+    }
+  }
+
+  public void buildAndThrow() throws T {
+    T ex = build();
+
+    throw ex;
+  }
+
   public static class CreationException extends RuntimeException {
     private Throwable creationException;
     private Throwable causeParam;
@@ -44,57 +96,5 @@ class ExceptionBuilder<T extends Exception> {
               .map(it -> String.format(" (%s)", it))
               .orElse(""));
     }
-  }
-
-  static <T extends Exception> ExceptionBuilder<T> of(Class<T> exceptionClass) {
-    ExceptionBuilder<T> builder = new ExceptionBuilder<>();
-    builder.exceptionClass = exceptionClass;
-
-    return builder;
-  }
-
-  public ExceptionBuilder<T> withCause(Throwable cause) {
-    this.cause = cause;
-
-    return this;
-  }
-
-  public ExceptionBuilder<T> withMessage(String message, Object parameters) {
-    String formattedMessage = Strings.create(message, parameters);
-    this.message = formattedMessage;
-
-    return this;
-  }
-
-  public T build() {
-    final String exceptionClassName = exceptionClass.getSimpleName();
-    final Class<?> constructorParamTypes[];
-    final Object constructorParams[];
-    final Constructor<T> constructor;
-
-    if (message == null && cause == null) {
-      constructorParamTypes = new Class[0];
-      constructorParams = new Object[0];
-    } else {
-      if (cause == null) {
-        constructorParamTypes = new Class[]{String.class};
-        constructorParams = new Object[]{message};
-      } else {
-        constructorParamTypes = new Class[]{String.class, Throwable.class};
-        constructorParams = new Object[]{message, cause};
-      }
-    }
-
-    try {
-      return exceptionClass.getConstructor(constructorParamTypes).newInstance(constructorParams);
-    } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
-      throw new CreationException(e, exceptionClass, message, cause);
-    }
-  }
-
-  public void buildAndThrow() throws T {
-    T ex = build();
-
-    throw ex;
   }
 }

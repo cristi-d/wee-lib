@@ -9,7 +9,7 @@ public class StringPrinter {
     this.printStream = printStream;
   }
 
-  public StringPrinter println(String format, Object ... params) {
+  public StringPrinter println(String format, Object... params) {
     String formatted = Strings.create(format, params);
 
     printStream.println(formatted);
@@ -17,7 +17,7 @@ public class StringPrinter {
     return this;
   }
 
-  public StringPrinter print(String format, Object ... params) {
+  public StringPrinter print(String format, Object... params) {
     String formatted = Strings.create(format, params);
 
     printStream.print(formatted);

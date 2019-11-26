@@ -59,7 +59,7 @@ public class ClassName implements CharSequence {
   @Override
   public boolean equals(Object other) {
     if (other instanceof ClassName) {
-      return Objects.equals(this.className, ((ClassName)other).className);
+      return Objects.equals(this.className, ((ClassName) other).className);
     }
 
     if (other instanceof CharSequence) {
