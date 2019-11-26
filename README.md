@@ -56,7 +56,7 @@ RepeatingAttempt<Integer> progressCheck =
 assertTrue(progressCheck.isStarted());
 assertTrue(progressCheck.isFinished());
 
-//In case we did reached the result we were attempting to get
+//In case we did reach the result we were attempting to get
 assertTrue(progressCheck.isSuccessful()); 
 assertTrue(progressCheck.getResult().isPresent());
 assertEquals(100, progressCheck.getResult().get());
