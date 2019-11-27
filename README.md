@@ -83,12 +83,12 @@ assertEquals(100, progressCheck.getResult().get());
 ```
 
 ## Exceptions
-Facade for building exceptions with templated messages
+For building exceptions with templated messages
 ```
 //Create an Exception object
 IllegalStateException forSafeKeeping = 
   Exceptions
-    .builder(IllegalStateException.class)
+    .create(IllegalStateException.class)
     .withMessage("Here's an exception that's {} millis old", System.currentTimeMillis())
     .build();
 
@@ -96,7 +96,7 @@ IllegalStateException forSafeKeeping =
 Exception cause = new UnsupportedOperationException("Oops...");
 String panicDegree = Math.random() > 0.5 ? " very " : " ";
 Exceptions
-  .builder(IllegalStateException.class)
+  .create(IllegalStateException.class)
   .withCause(cause)
   .withMessage("Encountered a{}nasty exception", panicDegree)
   .buildAndThrow();

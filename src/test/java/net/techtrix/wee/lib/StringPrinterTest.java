@@ -1,5 +1,6 @@
 package net.techtrix.wee.lib;
 
+import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -15,7 +16,8 @@ class StringPrinterTest {
 
   @Test
   void println() {
-    PrintStream spiedPrintStream = Mockito.spy(System.out);
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    PrintStream spiedPrintStream = Mockito.spy(new PrintStream(baos));
     StringPrinter sut = new StringPrinter(spiedPrintStream);
 
     String expected = "Some thing";
@@ -25,12 +27,15 @@ class StringPrinterTest {
     verify(spiedPrintStream, times(ONCE)).println(argumentCaptor.capture());
 
     assertEquals(expected, argumentCaptor.getValue());
+    assertEquals(expected + "\n", new String(baos.toByteArray()));
 
   }
 
   @Test
   void print() {
-    PrintStream spiedPrintStream = Mockito.spy(System.out);
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    PrintStream spiedPrintStream = Mockito.spy(new PrintStream(baos));
+
     StringPrinter sut = new StringPrinter(spiedPrintStream);
 
     String expected = "Some thing";
@@ -40,5 +45,6 @@ class StringPrinterTest {
     verify(spiedPrintStream, times(ONCE)).print(argumentCaptor.capture());
 
     assertEquals(expected, argumentCaptor.getValue());
+    assertEquals(expected, new String(baos.toByteArray()));
   }
 }

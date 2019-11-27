@@ -1,6 +1,7 @@
 package net.techtrix.wee.lib;
 
 import com.sun.org.apache.xpath.internal.Arg;
+import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
@@ -95,7 +96,8 @@ class StringsTest {
   @Test
   void testPrinterFacade() {
     String expected = "Something wonderful";
-    PrintStream spiedPrintStream = Mockito.spy(System.out);
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    PrintStream spiedPrintStream = Mockito.spy(new PrintStream(baos));
 
 
     Strings.print().to(spiedPrintStream).println(expected);
@@ -104,6 +106,7 @@ class StringsTest {
     verify(spiedPrintStream, times(ONCE)).println(argCaptor.capture());
 
     assertEquals(expected, argCaptor.getValue());
+    assertEquals(expected + "\n", new String(baos.toByteArray()));
   }
 
   @Test
