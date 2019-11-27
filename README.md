@@ -1,4 +1,5 @@
 # The _wee_ library
+[![CircleCI](https://circleci.com/gh/cristi-d/wee-lib.svg?style=svg)](https://circleci.com/gh/cristi-d/wee-lib)
 
 No extra dependencies, just a few helper objects for your daily Java needs
 
