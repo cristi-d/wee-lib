@@ -10,7 +10,7 @@ class ExceptionsTest {
   void testBuilderFacade() {
     IllegalStateException result =
         Exceptions
-            .builder(IllegalStateException.class)
+            .create(IllegalStateException.class)
             .withMessage("Some {} message", "horrific")
             .build();
 
@@ -18,12 +18,5 @@ class ExceptionsTest {
 
     String expectedMsg = "Some horrific message";
     assertEquals(expectedMsg, result.getMessage());
-  }
-
-  @Test
-  void testTryFacade() {
-    String result = Exceptions.attempt(() -> "perfection!").go();
-
-    assertEquals("perfection!", result);
   }
 }

@@ -47,7 +47,7 @@ class StringsTest {
   @Test
   void testCreateComplexTemplate() {
     String format = "This is a {} example and it's very {}";
-    String[] parameters = {"wonderful", "complex"};
+    Object[] parameters = {"wonderful", "complex"};
     String expected = "This is a wonderful example and it's very complex";
 
     String result = Strings.create(format, parameters);

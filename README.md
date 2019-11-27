@@ -13,6 +13,26 @@ if (sysyphus.isntTired()) {
 }
 ```
 
+## Cached
+> Mostly lazy but with occasional bursts of diligence
+
+Helper object for caching values
+
+```
+Supplier<Double> randomDoubleSupplier = spyRandomSupplier();
+
+Duration retentionPeriod = Duration.ofMillis(10);
+Cached<Double> cachedRandomDouble =
+    Cached.of(randomDoubleSupplier)
+        .retainingFor(retentionPeriod);
+
+cachedRandomDouble.get();
+waitFor(retentionPeriod.plus(10, ChronoUnit.MILLIS));
+cachedRandomDouble.get();
+
+verify(randomDoubleSupplier, times(TWICE)).get();
+```
+
 ## Recoverable
 Useful for operations for which we can provide fallbacks in case of failures
 

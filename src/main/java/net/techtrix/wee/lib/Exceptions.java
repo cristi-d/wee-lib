@@ -5,7 +5,7 @@ public class Exceptions {
   private Exceptions() {
   }
 
-  public static <T extends Exception> ExceptionBuilder<T> builder(Class<T> exceptionClass) {
+  public static <T extends Exception> ExceptionBuilder<T> create(Class<T> exceptionClass) {
     return ExceptionBuilder.of(exceptionClass);
   }
 }
