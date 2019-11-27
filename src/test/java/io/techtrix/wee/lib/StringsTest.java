@@ -1,6 +1,5 @@
-package net.techtrix.wee.lib;
+package io.techtrix.wee.lib;
 
-import com.sun.org.apache.xpath.internal.Arg;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.UUID;

@@ -1,4 +1,4 @@
-package net.techtrix.wee.lib;
+package io.techtrix.wee.lib;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.junit.jupiter.api.Test;

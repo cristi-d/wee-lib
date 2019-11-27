@@ -1,4 +1,4 @@
-package net.techtrix.wee.lib;
+package io.techtrix.wee.lib;
 
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;

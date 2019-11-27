@@ -1,4 +1,4 @@
-package net.techtrix.wee.lib;
+package io.techtrix.wee.lib;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
