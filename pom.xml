@@ -6,7 +6,7 @@
 
     <groupId>io.techtrix</groupId>
     <artifactId>wee-lib</artifactId>
-    <version>1.0.0-${artifactType}</version>
+    <version>1.0.1-${artifactType}</version>
 
     <name>The wee library</name>
     <description>No extra dependencies, just a few helper objects for your daily Java needs</description>
