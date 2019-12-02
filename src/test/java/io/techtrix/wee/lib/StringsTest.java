@@ -1,6 +1,8 @@
 package io.techtrix.wee.lib;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
@@ -8,6 +10,8 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -93,7 +97,7 @@ class StringsTest {
   }
 
   @Test
-  void testPrinterFacade() {
+  void testPrinterFacadeWithPrintStream() {
     String expected = "Something wonderful";
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     PrintStream spiedPrintStream = Mockito.spy(new PrintStream(baos));
@@ -106,6 +110,18 @@ class StringsTest {
 
     assertEquals(expected, argCaptor.getValue());
     assertEquals(expected + "\n", new String(baos.toByteArray()));
+  }
+
+  @Test
+  void testPrinterFacadeWithOutputStream() {
+    String expected = "Something wonderful";
+    ByteArrayOutputStream spiedOutputStream = Mockito.spy(new ByteArrayOutputStream());
+
+    Strings.print().to(spiedOutputStream).println(expected);
+
+    verify(spiedOutputStream, times(ONCE)).write(any(), eq(0), eq(expected.length()));
+
+    assertEquals(expected + "\n", new String(spiedOutputStream.toByteArray()));
   }
 
   @Test

@@ -1,5 +1,6 @@
 package io.techtrix.wee.lib;
 
+import java.io.OutputStream;
 import java.io.PrintStream;
 
 public class Strings {
@@ -44,6 +45,10 @@ public class Strings {
 
     public StringPrinter to(PrintStream printStream) {
       return new StringPrinter(printStream);
+    }
+
+    public StringPrinter to(OutputStream outputStream) {
+      return new StringPrinter(new PrintStream(outputStream));
     }
 
   }
