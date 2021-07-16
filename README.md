@@ -1,5 +1,6 @@
 # The _wee_ library
 [![CircleCI](https://circleci.com/gh/cristi-d/wee-lib.svg?style=svg)](https://circleci.com/gh/cristi-d/wee-lib)
+[![maven-central](https://maven-badges.herokuapp.com/maven-central/io.techtrix/wee-lib/badge.png)](https://search.maven.org/artifact/io.techtrix/wee-lib/1.0.1-RELEASE/jar)
 
 No extra dependencies, just a few helper objects for your daily Java needs
 
